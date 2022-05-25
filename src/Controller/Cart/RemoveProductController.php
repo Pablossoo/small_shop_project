@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Cart;
 
 use App\Entity\Cart;
@@ -14,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/cart/{cart}/{product}", methods={"DELETE"}, name="cart-remove-product")
  */
-class RemoveProductController extends AbstractController implements MessageBusAwareInterface
+final class RemoveProductController extends AbstractController implements MessageBusAwareInterface
 {
     use MessageBusTrait;
 

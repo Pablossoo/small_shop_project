@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Functional;
 
-use Doctrine\Bundle\FixturesBundle\ORMFixtureInterface;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\DataFixtures\Loader;
@@ -14,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 class WebTestCase extends \Symfony\Bundle\FrameworkBundle\Test\WebTestCase
 {
     protected KernelBrowser $client;
+
     protected EntityManagerInterface $entityManager;
 
     protected function setUp(): void

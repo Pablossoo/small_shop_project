@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Service\Catalog\Product;
@@ -9,7 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Ramsey\Uuid\Uuid;
 
-class ProductRepository implements ProductProvider, ProductService
+final class ProductRepository implements ProductProvider, ProductService
 {
     private EntityRepository $repository;
 

@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ResponseBuilder;
 
-class ErrorBuilder
+final class ErrorBuilder
 {
     public function __invoke(string $message): array
     {

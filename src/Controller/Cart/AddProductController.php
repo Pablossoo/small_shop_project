@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Cart;
 
 use App\Entity\Cart;
@@ -16,11 +18,13 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/cart/{cart}/{product}", methods={"PUT"}, name="cart-add-product")
  */
-class AddProductController extends AbstractController implements MessageBusAwareInterface
+final class AddProductController extends AbstractController implements MessageBusAwareInterface
 {
     use MessageBusTrait;
 
-    public function __construct(private ErrorBuilder $errorBuilder) { }
+    public function __construct(private ErrorBuilder $errorBuilder)
+    {
+    }
 
     public function __invoke(Cart $cart, Product $product): Response
     {

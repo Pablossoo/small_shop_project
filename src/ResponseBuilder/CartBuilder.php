@@ -1,23 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ResponseBuilder;
 
 use App\Service\Cart\Cart;
 
-class CartBuilder
+final class CartBuilder
 {
     public function __invoke(Cart $cart): array
     {
         $data = [
             'total_price' => $cart->getTotalPrice(),
-            'products' => []
+            'products'    => [],
         ];
 
         foreach ($cart->getProducts() as $product) {
             $data['products'][] = [
-                'id' => $product->getId(),
-                'name' => $product->getName(),
-                'price' => $product->getPrice()
+                'id'    => $product->getId(),
+                'name'  => $product->getName(),
+                'price' => $product->getPrice(),
             ];
         }
 

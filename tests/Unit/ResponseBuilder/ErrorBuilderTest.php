@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\ResponseBuilder;
 
 use App\ResponseBuilder\ErrorBuilder;
@@ -12,15 +14,17 @@ class ErrorBuilderTest extends TestCase
 {
     private ErrorBuilder $builder;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->builder = new ErrorBuilder();
     }
 
-    public function test_builds_error(): void
+    public function testBuildsError(): void
     {
-        $this->assertEquals(['error_message' => 'Error message.'], $this->builder->__invoke('Error message.'));
+        $this->assertEquals([
+            'error_message' => 'Error message.',
+        ], $this->builder->__invoke('Error message.'));
     }
 }

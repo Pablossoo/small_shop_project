@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\ResponseBuilder;
 
 use App\Entity\Cart;
@@ -21,17 +23,17 @@ class CartBuilderTest extends TestCase
         $this->builder = new CartBuilder();
     }
 
-    public function test_builds_cart_with_no_products(): void
+    public function testBuildsCartWithNoProducts(): void
     {
         $cart = new Cart('3db5f857-e5a3-4c8d-a262-37da156c0001');
 
         $this->assertEquals([
             'total_price' => 0,
-            'products' => []
+            'products'    => [],
         ], $this->builder->__invoke($cart));
     }
 
-    public function test_builds_cart_with_products(): void
+    public function testBuildsCartWithProducts(): void
     {
         $cart = new Cart('3db5f857-e5a3-4c8d-a262-37da156c0001');
         $cart->addProduct(new Product('16e0226c-0ed8-434a-9342-429aefeb98f0', 'Product 1', 1990));
@@ -39,18 +41,18 @@ class CartBuilderTest extends TestCase
 
         $this->assertEquals([
             'total_price' => 5680,
-            'products' => [
+            'products'    => [
                 [
-                    'id' => '16e0226c-0ed8-434a-9342-429aefeb98f0',
-                    'name' => 'Product 1',
+                    'id'    => '16e0226c-0ed8-434a-9342-429aefeb98f0',
+                    'name'  => 'Product 1',
                     'price' => 1990,
                 ],
                 [
-                    'id' => '5884ad4c-9ac2-40a5-ba11-1a96156c5889',
-                    'name' => 'Product 2',
+                    'id'    => '5884ad4c-9ac2-40a5-ba11-1a96156c5889',
+                    'name'  => 'Product 2',
                     'price' => 3690,
                 ],
-            ]
+            ],
         ], $this->builder->__invoke($cart));
     }
 }

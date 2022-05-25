@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Catalog;
 
 use App\Entity\Product;
@@ -13,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/products/{product}", methods={"DELETE"}, name="product-delete")
  */
-class RemoveController extends AbstractController implements MessageBusAwareInterface
+final class RemoveController extends AbstractController implements MessageBusAwareInterface
 {
     use MessageBusTrait;
 
@@ -22,7 +24,7 @@ class RemoveController extends AbstractController implements MessageBusAwareInte
         if ($product !== null) {
             $this->dispatch(new RemoveProductFromCatalog($product->getId()));
         }
-        
+
         return new Response('', Response::HTTP_ACCEPTED);
     }
 }

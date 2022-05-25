@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Functional\Controller\Cart\AddProductController;
 
 use App\Entity\Cart;
@@ -9,7 +11,6 @@ use Doctrine\Persistence\ObjectManager;
 
 class AddProductControllerFixture extends AbstractFixture
 {
-
     public function load(ObjectManager $manager): void
     {
         $products = [

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Listener;
 
 use App\ResponseBuilder\ErrorBuilder;
@@ -8,9 +10,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class ExceptionListener
+final class ExceptionListener
 {
-    public function __construct(private ErrorBuilder $errorBuilder) {}
+    public function __construct(private ErrorBuilder $errorBuilder)
+    {
+    }
 
     public function onKernelException(ExceptionEvent $event): void
     {

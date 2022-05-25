@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Service\Catalog\Product;
@@ -25,7 +27,7 @@ class Cart implements \App\Service\Cart\Cart
 
     public function __construct(string $id)
     {
-        $this->id = Uuid::fromString($id);
+        $this->id       = Uuid::fromString($id);
         $this->products = new ArrayCollection();
     }
 
@@ -38,7 +40,7 @@ class Cart implements \App\Service\Cart\Cart
     {
         return array_reduce(
             $this->products->toArray(),
-            static fn(int $total, Product $product): int => $total + $product->getPrice(),
+            static fn (int $total, Product $product): int => $total + $product->getPrice(),
             0
         );
     }

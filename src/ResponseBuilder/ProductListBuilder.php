@@ -1,13 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ResponseBuilder;
 
 use App\Service\Catalog\Product;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class ProductListBuilder
+final class ProductListBuilder
 {
-    public function __construct(private UrlGeneratorInterface $urlGenerator) { }
+    public function __construct(private UrlGeneratorInterface $urlGenerator)
+    {
+    }
 
     /**
      * @param Product[] $products
@@ -16,25 +20,29 @@ class ProductListBuilder
     {
         $data = [
             'previous_page' => null,
-            'next_page' => null,
-            'count' => $totalCount,
-            'products' => []
+            'next_page'     => null,
+            'count'         => $totalCount,
+            'products'      => [],
         ];
 
         if ($page > 0) {
-            $data['previous_page'] = $this->urlGenerator->generate('product-list', ['page' => $page - 1]);
+            $data['previous_page'] = $this->urlGenerator->generate('product-list', [
+                'page' => $page - 1,
+            ]);
         }
 
         $lastPage = ceil($totalCount / $maxPerPage);
         if ($page < $lastPage - 1) {
-            $data['next_page'] = $this->urlGenerator->generate('product-list', ['page' => $page + 1]);
+            $data['next_page'] = $this->urlGenerator->generate('product-list', [
+                'page' => $page + 1,
+            ]);
         }
 
         foreach ($products as $product) {
             $data['products'][] = [
-                'id' => $product->getId(),
-                'name' => $product->getName(),
-                'price' => $product->getPrice()
+                'id'    => $product->getId(),
+                'name'  => $product->getName(),
+                'price' => $product->getPrice(),
             ];
         }
 

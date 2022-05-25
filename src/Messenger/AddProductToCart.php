@@ -1,8 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Messenger;
 
-class AddProductToCart
+final class AddProductToCart
 {
-    public function __construct(public readonly string $cartId, public readonly string $productId) {}
+    public function __construct(
+        public readonly string $cartId,
+        public readonly string $productId
+    ) {
+    }
 }

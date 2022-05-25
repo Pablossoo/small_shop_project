@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Functional\Controller\Catalog\ListController;
 
 use App\Entity\Product;
