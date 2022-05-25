@@ -16,11 +16,11 @@ services:
       context: ./docker/php
     volumes:
       - '.:/app'
+      - ./docker/php/php-ini-overrides.ini:/usr/local/etc/php/conf.d/99-overrides.ini
     restart: on-failure
     environment:
       - 'COMPOSER_HOME=/tmp/composer'
       - 'COMPOSER_ALLOW_SUPERUSER=1'
-      - 'XDEBUG_MODE=develop,debug'
     user: "${DOCKER_USER_ID:-1000}:${DOCKER_GROUP_ID:-1000}"
     depends_on:
       - database
