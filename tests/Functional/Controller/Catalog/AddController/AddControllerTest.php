@@ -10,14 +10,14 @@ class AddControllerTest extends WebTestCase
 {
     public function testAddsProduct(): void
     {
-        $this->client->request('POST', '/products', [
+        $this->client->jsonRequest('POST', '/products', [
             'name'  => 'Product name',
             'price' => 1990,
         ]);
 
         self::assertResponseStatusCodeSame(202);
 
-        $this->client->request('GET', '/products');
+        $this->client->jsonRequest('GET', '/products');
         self::assertResponseStatusCodeSame(200);
 
         $response = $this->getJsonResponse();
@@ -28,7 +28,7 @@ class AddControllerTest extends WebTestCase
 
     public function testProductWithEmptyNameCannotBeAdded(): void
     {
-        $this->client->request('POST', '/products', [
+        $this->client->jsonRequest('POST', '/products', [
             'name'  => '    ',
             'price' => 1990,
         ]);
@@ -36,12 +36,13 @@ class AddControllerTest extends WebTestCase
         self::assertResponseStatusCodeSame(422);
 
         $response = $this->getJsonResponse();
+
         self::assertequals('Invalid name or price.', $response['error_message']);
     }
 
     public function testProductWithoutAPriceCannotBeAdded(): void
     {
-        $this->client->request('POST', '/products', [
+        $this->client->jsonRequest('POST', '/products', [
             'name' => 'Product name',
         ]);
 
@@ -53,7 +54,7 @@ class AddControllerTest extends WebTestCase
 
     public function testProductWithNonPositivePriceCannotBeAdded(): void
     {
-        $this->client->request('POST', '/products', [
+        $this->client->jsonRequest('POST', '/products', [
             'name'  => 'Product name',
             'price' => 0,
         ]);

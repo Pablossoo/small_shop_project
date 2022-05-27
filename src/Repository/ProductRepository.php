@@ -40,9 +40,9 @@ final class ProductRepository implements ProductProvider, ProductService
         return $this->repository->find($productId) !== null;
     }
 
-    public function add(string $name, int $price): Product
+    public function add(string $name, int $price, int $quantity): Product
     {
-        $product = new \App\Entity\Product(Uuid::uuid4(), $name, $price);
+        $product = new \App\Entity\Product(Uuid::uuid4()->toString(), $name, $price, $quantity);
 
         $this->entityManager->persist($product);
         $this->entityManager->flush();

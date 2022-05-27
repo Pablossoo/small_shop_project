@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Messenger;
+namespace App\Messenger\CommandHandler;
 
+use App\Messenger\Command\RemoveProductFromCatalog;
 use App\Service\Catalog\ProductService;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 

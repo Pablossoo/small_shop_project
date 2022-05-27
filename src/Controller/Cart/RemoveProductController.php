@@ -6,9 +6,7 @@ namespace App\Controller\Cart;
 
 use App\Entity\Cart;
 use App\Entity\Product;
-use App\Messenger\MessageBusAwareInterface;
-use App\Messenger\MessageBusTrait;
-use App\Messenger\RemoveProductFromCart;
+use App\Messenger\Command\RemoveProductFromCart;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,9 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/cart/{cart}/{product}", methods={"DELETE"}, name="cart-remove-product")
  */
-final class RemoveProductController extends AbstractController implements MessageBusAwareInterface
+final class RemoveProductController extends AbstractController
 {
-    use MessageBusTrait;
 
     public function __invoke(Cart $cart, ?Product $product): Response
     {

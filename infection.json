@@ -1,22 +1,10 @@
 {
     "source": {
         "directories": [
-            "component/alerts/src",
-            "component/alerts-calculating-process/src",
-            "component/alerts-calculating-statistics/src",
-            "component/download-raw-data/src",
-            "component/integration-reference-data/src",
-            "component/mongo-raw-data-publisher/src",
-            "component/preparation-data-report/src",
-            "component/raw-data/src",
-            "component/raw-data-searcher/src",
-            "component/raw-data-to-report-level-transporter/src",
-            "component/report-importer/src",
-            "component/source-raw-data-interpreter/src",
-            "component/requirement-source-data-checker/src"
+            "src"
         ],
         "excludes": [
-            "component/*/tests"
+            "src/*/tests"
         ]
     },
     "logs": {

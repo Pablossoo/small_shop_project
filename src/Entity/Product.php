@@ -21,19 +21,23 @@ class Product implements \App\Service\Catalog\Product
     private string $priceAmount;
 
     #[ORM\Column(type: 'datetime', nullable: false)]
-    private \DateTimeImmutable $createdAt;
+    private \DateTime $createdAt;
 
-    public function __construct(string $id, string $name, int $price)
+    #[ORM\Column(type: 'integer')]
+    private $quantity;
+
+    public function __construct(string $id, string $name, int $price, int $quantity)
     {
         $this->id = Uuid::fromString($id);
         $this->name = $name;
         $this->priceAmount = $price;
+        $this->quantity = $quantity;
     }
 
     #[ORM\PrePersist]
-    public function setCreateAt()
+    public function setCreateAt(): void
     {
-        $this->createdAt = new \DateTimeImmutable();
+        $this->createdAt = new \DateTime();
     }
 
     public function getId(): string
@@ -50,37 +54,4 @@ class Product implements \App\Service\Catalog\Product
     {
         return $this->priceAmount;
     }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getPriceAmount(): ?int
-    {
-        return $this->priceAmount;
-    }
-
-    public function setPriceAmount(int $priceAmount): self
-    {
-        $this->priceAmount = $priceAmount;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-
 }

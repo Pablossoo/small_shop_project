@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Cart;
 
-use App\Messenger\CreateCart;
+use App\Messenger\Command\CreateCart;
 use App\Service\Cart\Cart;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;

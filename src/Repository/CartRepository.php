@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Product;
+use App\Exception\LimitProductCardExceededException;
 use App\Service\Cart\Cart;
 use App\Service\Cart\CartService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,7 +13,7 @@ use Ramsey\Uuid\Uuid;
 
 final class CartRepository implements CartService
 {
-    public function __construct(private EntityManagerInterface $entityManager)
+    public function __construct(private readonly EntityManagerInterface $entityManager)
     {
     }
 
@@ -21,11 +22,12 @@ final class CartRepository implements CartService
         $cart    = $this->entityManager->find(\App\Entity\Cart::class, $cartId);
         $product = $this->entityManager->find(Product::class, $productId);
 
-        if ($cart && $product && ! $cart->hasProduct($product)) {
+        if ($cart->hasProduct($product)) {
+            throw LimitProductCardExceededException::LimitProductCartExceeded($cartId);
+        }
             $cart->addProduct($product);
             $this->entityManager->persist($cart);
             $this->entityManager->flush();
-        }
     }
 
     public function removeProduct(string $cartId, string $productId): void
