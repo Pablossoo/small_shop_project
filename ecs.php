@@ -12,7 +12,6 @@ use PhpCsFixer\Fixer\Phpdoc\PhpdocToCommentFixer;
 use PhpCsFixer\Fixer\Semicolon\MultilineWhitespaceBeforeSemicolonsFixer;
 use PhpCsFixer\Fixer\Whitespace\BlankLineBeforeStatementFixer;
 use PhpCsFixer\Fixer\Whitespace\MethodChainingIndentationFixer;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symplify\CodingStandard\Fixer\LineLength\LineLengthFixer;
 use Symplify\CodingStandard\Fixer\Spacing\MethodChainingNewlineFixer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
@@ -24,7 +23,8 @@ return static function (ECSConfig $ecsConfig): void {
     $parameters->set(Option::PATHS, [
         __DIR__,
     ]);
-    $ecsConfig->skip( [__DIR__ . '/var']
+    $ecsConfig->skip(
+        [__DIR__ . '/var/']
     );
     $parameters->set(Option::PARALLEL, true);
 

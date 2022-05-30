@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Product;
+use App\Entity\ProductCart;
 use App\Exception\LimitProductCardExceededException;
 use App\Service\Cart\Cart;
 use App\Service\Cart\CartService;
@@ -22,12 +23,16 @@ final class CartRepository implements CartService
         $cart    = $this->entityManager->find(\App\Entity\Cart::class, $cartId);
         $product = $this->entityManager->find(Product::class, $productId);
 
-        if ($cart->hasProduct($product)) {
+        $productCart = new ProductCart(Uuid::uuid4()->toString());
+        $productCart->setCart($cart);
+        $productCart->setProduct($product);
+
+        if ($cart->isFull()) {
             throw LimitProductCardExceededException::LimitProductCartExceeded($cartId);
         }
-            $cart->addProduct($product);
-            $this->entityManager->persist($cart);
-            $this->entityManager->flush();
+
+        $this->entityManager->persist($productCart);
+        $this->entityManager->flush();
     }
 
     public function removeProduct(string $cartId, string $productId): void
@@ -50,5 +55,16 @@ final class CartRepository implements CartService
         $this->entityManager->flush();
 
         return $cart;
+    }
+
+    public function updateProductQuantity(string $productId): void
+    {
+        $product = $this->entityManager->find(Product::class, $productId);
+
+        if (! $product->isStockAvailable()) {
+            throw new \Exception(sprintf('Product %s Out of stock!', $productId));
+        }
+        $product->setQuantity($product->getQuantity()-1);
+        $this->entityManager->flush();
     }
 }

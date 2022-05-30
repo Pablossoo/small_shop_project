@@ -9,7 +9,6 @@ use App\Service\Cart\Cart;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Messenger\HandleTrait;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -18,17 +17,15 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 final class CreateController extends AbstractController
 {
-    use HandleTrait;
-
-    public function __construct(MessageBusInterface $messageBus)
-    {
-        $this->messageBus = $messageBus;
+    public function __construct(
+        private readonly MessageBusInterface $messageBus
+    ) {
     }
 
     public function __invoke(): Response
     {
         /** @var Cart $cart */
-        $cart = $this->handle(new CreateCart());
+        $cart = $this->messageBus->dispatch(new CreateCart());
 
         return new JsonResponse([
             'cart_id' => $cart->getId(),

@@ -11,4 +11,8 @@ interface Product
     public function getName(): string;
 
     public function getPrice(): int;
+
+    public function getQuantity(): int;
+
+    public function getCreatedAt(): \DateTime;
 }

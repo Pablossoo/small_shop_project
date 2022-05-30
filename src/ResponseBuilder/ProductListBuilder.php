@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final class ProductListBuilder
 {
-    public function __construct(private UrlGeneratorInterface $urlGenerator)
+    public function __construct(private readonly UrlGeneratorInterface $urlGenerator)
     {
     }
 
@@ -40,9 +40,11 @@ final class ProductListBuilder
 
         foreach ($products as $product) {
             $data['products'][] = [
-                'id'    => $product->getId(),
-                'name'  => $product->getName(),
-                'price' => $product->getPrice(),
+                'id'        => $product->getId(),
+                'name'      => $product->getName(),
+                'price'     => $product->getPrice(),
+                'quantity'  => $product->getQuantity(),
+                'createdAt' => $product->getCreatedAt()->format('Y-m-d H:i:s'),
             ];
         }
 

@@ -11,6 +11,7 @@ use App\ResponseBuilder\ErrorBuilder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -18,20 +19,18 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 final class AddProductController extends AbstractController
 {
-
-
-    public function __construct(private readonly ErrorBuilder $errorBuilder)
-    {
-
+    public function __construct(
+        private readonly ErrorBuilder $errorBuilder,
+        private readonly MessageBusInterface $messageBus
+    ) {
     }
 
     public function __invoke(Cart $cart, Product $product): Response
     {
-
         try {
-            $this->dispatch(new AddProductToCart($cart->getId(), $product->getId()));
-        }catch (\Throwable $exception) {
-            return new JsonResponse($this->errorBuilder->__invoke($exception->getMessage()), Response::HTTP_UNPROCESSABLE_ENTITY);
+            $this->messageBus->dispatch(new AddProductToCart($cart->getId(), $product->getId()));
+        } catch (\Throwable $exception) {
+            return new JsonResponse($this->errorBuilder->__invoke($exception->getPrevious()->getMessage()), Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         return new JsonResponse('success', Response::HTTP_ACCEPTED);

@@ -6,6 +6,7 @@ use Rector\Arguments\Rector\ClassMethod\ArgumentAdderRector;
 use Rector\CodeQuality\Rector\Array_\CallableThisArrayToAnonymousFunctionRector;
 use Rector\CodingStyle\Rector\ClassConst\VarConstantCommentRector;
 use Rector\CodingStyle\Rector\ClassMethod\UnSpreadOperatorRector;
+use Rector\Config\RectorConfig;
 use Rector\Core\Configuration\Option;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedConstructorParamRector;
 use Rector\EarlyReturn\Rector\If_\ChangeAndIfToEarlyReturnRector;
@@ -25,11 +26,9 @@ use Rector\Privatization\Rector\Property\ChangeReadOnlyPropertyWithDefaultValueT
 use Rector\Set\ValueObject\SetList;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddArrayParamDocTypeRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddArrayReturnDocTypeRector;
-use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {
-
-    $rectorConfig->skip([__DIR__.'/var']);
+    $rectorConfig->skip([__DIR__ . '/var/']);
     $rectorConfig->paths([__DIR__ . '/src']);
     $parameters = $rectorConfig->parameters();
 
@@ -69,7 +68,7 @@ return static function (RectorConfig $rectorConfig): void {
             MyCLabsClassToEnumRector::class,
             NewInInitializerRector::class,
             Php81ResourceReturnToObjectRector::class,
-            SpatieEnumClassToEnumRector::class
+            SpatieEnumClassToEnumRector::class,
         ]
     );
 };

@@ -18,5 +18,6 @@ final class AddProductToCartHandler
     public function __invoke(AddProductToCart $command): void
     {
         $this->service->addProduct($command->cartId, $command->productId);
+        $this->service->updateProductQuantity($command->productId);
     }
 }

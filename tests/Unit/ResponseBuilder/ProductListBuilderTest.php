@@ -105,9 +105,9 @@ class ProductListBuilderTest extends TestCase
     public function testBuildsMiddlePage(): void
     {
         $products = [
-            new Product('25cc9f5d-7702-4cb0-b6fc-f93b049055ca', 'Product 1', 1200),
-            new Product('30e4e028-3b38-4cb9-9267-a9e515983337', 'Product 2', 1400),
-            new Product('f6635017-982f-4544-9ac5-3d57107c0f0d', 'Product 3', 1500),
+            new Product('25cc9f5d-7702-4cb0-b6fc-f93b049055ca', 'Product 1', 1200,4),
+            new Product('30e4e028-3b38-4cb9-9267-a9e515983337', 'Product 2', 1400,3),
+            new Product('f6635017-982f-4544-9ac5-3d57107c0f0d', 'Product 3', 1500,2),
         ];
 
         $this->assertEquals([
@@ -119,16 +119,22 @@ class ProductListBuilderTest extends TestCase
                     'id'    => '25cc9f5d-7702-4cb0-b6fc-f93b049055ca',
                     'name'  => 'Product 1',
                     'price' => 1200,
+                    'quantity' => 4,
+                    'createdAt' => (new \DateTime())->format('Y-m-d H:i:s')
                 ],
                 [
                     'id'    => '30e4e028-3b38-4cb9-9267-a9e515983337',
                     'name'  => 'Product 2',
                     'price' => 1400,
+                    'quantity' => 3,
+                    'createdAt' => (new \DateTime())->format('Y-m-d H:i:s')
                 ],
                 [
                     'id'    => 'f6635017-982f-4544-9ac5-3d57107c0f0d',
                     'name'  => 'Product 3',
                     'price' => 1500,
+                    'quantity' => 2,
+                    'createdAt' => (new \DateTime())->format('Y-m-d H:i:s')
                 ],
             ],
         ], $this->builder->__invoke($products, 1, 3, 7));

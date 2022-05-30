@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 /**
  * @Route("/products", methods={"POST"}, name="product-add")
  */
-final class AddController extends AbstractController
+final class EditProductController extends AbstractController
 {
     public function __construct(
         private readonly ErrorBuilder $errorBuilder,

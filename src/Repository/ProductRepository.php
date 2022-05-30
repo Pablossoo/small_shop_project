@@ -24,10 +24,10 @@ final class ProductRepository implements ProductProvider, ProductService
     {
         return $this->repository->createQueryBuilder('p')
             ->setMaxResults($count)
+            ->orderBy('p.createdAt', 'DESC')
             ->setFirstResult($page * $count)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
     public function getTotalCount(): int
