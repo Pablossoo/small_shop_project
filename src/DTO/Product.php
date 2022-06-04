@@ -17,7 +17,7 @@ final class Product
         ),
         Length(
         min: 3
-    )]
+    ), Type("alnum")]
      public readonly string $name,
         #[NotBlank,
         Positive]
