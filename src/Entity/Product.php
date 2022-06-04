@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
@@ -28,6 +30,9 @@ class Product implements \App\Service\Catalog\Product
     #[ORM\Column(type: 'integer')]
     private int $quantity;
 
+    #[ORM\OneToMany(mappedBy: 'Product', targetEntity: ProductCart::class)]
+    private $ProductCart;
+
     public function __construct(string $id, string $name, int $price, int $quantity)
     {
         $this->id          = Uuid::fromString($id);
@@ -35,6 +40,7 @@ class Product implements \App\Service\Catalog\Product
         $this->price       = $price;
         $this->quantity    = $quantity;
         $this->createdAt = new \DateTime();
+        $this->ProductCart = new ArrayCollection();
     }
 
     #[ORM\PrePersist]
@@ -78,5 +84,56 @@ class Product implements \App\Service\Catalog\Product
     public function isStockAvailable(): bool
     {
         return $this->quantity > 0;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function setPrice(int $price): self
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProductCart>
+     */
+    public function getProductCart(): Collection
+    {
+        return $this->ProductCart;
+    }
+
+    public function addProductCart(ProductCart $productCart): self
+    {
+        if (!$this->ProductCart->contains($productCart)) {
+            $this->ProductCart[] = $productCart;
+            $productCart->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProductCart(ProductCart $productCart): self
+    {
+        if ($this->ProductCart->removeElement($productCart)) {
+            // set the owning side to null (unless already changed)
+            if ($productCart->getProduct() === $this) {
+                $productCart->setProduct(null);
+            }
+        }
+
+        return $this;
     }
 }

@@ -10,5 +10,7 @@ interface CartService
 
     public function removeProduct(string $cartId, string $productId): void;
 
-    public function create(): Cart;
+    public function create(): void;
+
+    public function getLastCreatedCart(): string;
 }

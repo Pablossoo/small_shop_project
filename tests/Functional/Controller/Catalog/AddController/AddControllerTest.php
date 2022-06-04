@@ -13,6 +13,7 @@ class AddControllerTest extends WebTestCase
         $this->client->jsonRequest('POST', '/products', [
             'name'  => 'Product name',
             'price' => 1990,
+            'quantity' => 4
         ]);
 
         self::assertResponseStatusCodeSame(202);
@@ -31,13 +32,14 @@ class AddControllerTest extends WebTestCase
         $this->client->jsonRequest('POST', '/products', [
             'name'  => '    ',
             'price' => 1990,
+            'quantity' => 4
         ]);
 
-        self::assertResponseStatusCodeSame(422);
+        self::assertResponseStatusCodeSame(400);
 
         $response = $this->getJsonResponse();
 
-        self::assertequals('Invalid name or price.', $response['error_message']);
+        self::assertequals('name - This value should not be blank.', $response['error_message']);
     }
 
     public function testProductWithoutAPriceCannotBeAdded(): void
@@ -46,10 +48,10 @@ class AddControllerTest extends WebTestCase
             'name' => 'Product name',
         ]);
 
-        self::assertResponseStatusCodeSame(422);
+        self::assertResponseStatusCodeSame(400);
 
         $response = $this->getJsonResponse();
-        self::assertequals('Invalid name or price.', $response['error_message']);
+        self::assertequals('Invalid request', $response['error_message']);
     }
 
     public function testProductWithNonPositivePriceCannotBeAdded(): void
@@ -59,9 +61,9 @@ class AddControllerTest extends WebTestCase
             'price' => 0,
         ]);
 
-        self::assertResponseStatusCodeSame(422);
+        self::assertResponseStatusCodeSame(400);
 
         $response = $this->getJsonResponse();
-        self::assertequals('Invalid name or price.', $response['error_message']);
+        self::assertequals('Invalid request', $response['error_message']);
     }
 }

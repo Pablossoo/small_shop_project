@@ -7,11 +7,14 @@ namespace App\DTO;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Positive;
+use Symfony\Component\Validator\Constraints\Type;
 
 final class Product
 {
     public function __construct(
-        #[NotBlank,
+        #[NotBlank(
+            normalizer: "trim"
+        ),
         Length(
         min: 3
     )]

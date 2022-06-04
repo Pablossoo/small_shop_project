@@ -15,8 +15,8 @@ final class CreateCartHandler implements MessageHandlerInterface
     {
     }
 
-    public function __invoke(CreateCart $command): Cart
+    public function __invoke(CreateCart $command): void
     {
-        return $this->service->create();
+        $this->service->create();
     }
 }
