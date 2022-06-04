@@ -17,16 +17,19 @@ class ProductCart
     #[ORM\Column(type: 'uuid', nullable: false)]
     private UuidInterface $id;
 
-    #[ORM\ManyToOne(targetEntity: Product::class)]
+    #[ORM\ManyToOne(targetEntity: Product::class, cascade: ["persist"])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $Product;
 
-    #[ORM\ManyToOne(targetEntity: Cart::class, inversedBy: 'productCarts')]
+    #[ORM\ManyToOne(targetEntity: Cart::class, cascade: ["persist"], inversedBy: 'productCarts')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Cart $Cart;
 
     #[ORM\Column(type: 'datetime', nullable: false)]
     private \DateTime $createdAt;
+
+    #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'ProductCart')]
+    private $product;
 
     public function __construct(string $id)
     {
@@ -56,5 +59,27 @@ class ProductCart
         $this->Cart = $Cart;
 
         return $this;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getCart(): ?Cart
+    {
+        return $this->Cart;
     }
 }

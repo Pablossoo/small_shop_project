@@ -7,6 +7,7 @@ namespace App\DTO;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Positive;
+use Symfony\Component\Validator\Constraints\Type;
 
 final class Product
 {
@@ -14,7 +15,7 @@ final class Product
         #[NotBlank,
         Length(
         min: 3
-    )]
+    ), Type("alnum")]
      public readonly string $name,
         #[NotBlank,
         Positive]

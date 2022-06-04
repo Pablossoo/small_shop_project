@@ -15,7 +15,7 @@ class CreateControllerTest extends WebTestCase
         self::assertResponseStatusCodeSame(201);
 
         $response = $this->getJsonResponse();
-        $id       = $response['id'];
+        $id       = $response['cart_id'];
 
         $this->client->request('GET', '/cart/' . $id);
         self::assertResponseStatusCodeSame(200);
