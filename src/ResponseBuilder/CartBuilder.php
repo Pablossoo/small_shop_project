@@ -11,17 +11,20 @@ final class CartBuilder
     public function __invoke(Cart $cart): array
     {
         $data = [
-            'total_price' => 0,
+            'total_price' => $cart->getTotalPrice(),
             'products' => []
         ];
 
+
         if ($cart->getProducts() > 0) {
+
             foreach ($cart->getProducts() as $product) {
                 $data['products'][] = [
                     'id' => $product->getId(),
                     'name' => $product->getName(),
                     'price' => $product->getPrice(),
-                    'created_at' => $product->getCreatedAt(),
+                    'quantity' => $product->getQuantity(),
+                    'created_at' => $product->getCreatedAt()->format('Y-m-d H:i:s'),
                 ];
             }
         }

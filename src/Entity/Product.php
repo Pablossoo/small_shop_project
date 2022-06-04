@@ -30,7 +30,7 @@ class Product implements \App\Service\Catalog\Product
     #[ORM\Column(type: 'integer')]
     private int $quantity;
 
-    #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductCart::class)]
+    #[ORM\OneToMany(mappedBy: 'Product', targetEntity: ProductCart::class)]
     private $ProductCart;
 
     public function __construct(string $id, string $name, int $price, int $quantity)

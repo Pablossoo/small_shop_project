@@ -13,7 +13,7 @@ class AddControllerTest extends WebTestCase
         $this->client->jsonRequest('POST', '/products', [
             'name'  => 'Product name',
             'price' => 1990,
-            'quantity' => 55
+            'quantity' => 4
         ]);
 
         self::assertResponseStatusCodeSame(202);
@@ -32,14 +32,14 @@ class AddControllerTest extends WebTestCase
         $this->client->jsonRequest('POST', '/products', [
             'name'  => '    ',
             'price' => 1990,
-            'quantity' => 55
+            'quantity' => 4
         ]);
 
         self::assertResponseStatusCodeSame(400);
 
         $response = $this->getJsonResponse();
 
-        self::assertequals('name - This value should be of type alnum.', $response['error_message']);
+        self::assertequals('name - This value should not be blank.', $response['error_message']);
     }
 
     public function testProductWithoutAPriceCannotBeAdded(): void

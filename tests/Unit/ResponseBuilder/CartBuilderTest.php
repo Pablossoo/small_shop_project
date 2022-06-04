@@ -37,9 +37,18 @@ class CartBuilderTest extends TestCase
     public function testBuildsCartWithProducts(): void
     {
         $productCart = new ProductCart('3db5f857-e5a3-4c8d-a262-37da156c0001');
+        $productCart2 = new ProductCart('3db5f857-e5a3-4c8d-a262-37da156c0001');
         $cart = new Cart('16e0226c-0ed8-434a-9342-429aefeb98f0');
-        $productCart->setProduct(new Product('16e0226c-0ed8-434a-9342-429aefeb98f0', 'Product 1', 1990, 4));
-        $productCart->setCart($cart);
+
+
+        $product = (new Product('16e0226c-0ed8-434a-9342-429aefeb98f0', 'Product 1', 1990, 4));
+        $product2 = (new Product('16e0226c-0ed8-434a-9342-429aefeb98f0', 'Product 2', 3690, 4));
+
+        $cart->addProductCart($productCart);
+        $cart->addProductCart($productCart2);
+        $product->addProductCart($productCart);
+        $product2->addProductCart($productCart2);
+
 
         $this->assertEquals([
             'total_price' => 5680,
@@ -48,7 +57,16 @@ class CartBuilderTest extends TestCase
                     'id'    => '16e0226c-0ed8-434a-9342-429aefeb98f0',
                     'name'  => 'Product 1',
                     'price' => 1990,
-                    'quantity' => 4
+                    'quantity' => 4,
+                    'created_at'=> (new \DateTime())->format('Y-m-d H:i:s')
+                ],
+
+                [
+                    'id'    => '16e0226c-0ed8-434a-9342-429aefeb98f0',
+                    'name'  => 'Product 2',
+                    'price' => 3690,
+                    'quantity' => 4,
+                    'created_at'=> (new \DateTime())->format('Y-m-d H:i:s')
                 ],
             ],
         ], $this->builder->__invoke($cart));

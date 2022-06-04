@@ -10,6 +10,7 @@ use App\Entity\ProductCart;
 use App\Exception\LimitProductCardExceededException;
 use App\Service\Cart\CartService;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityNotFoundException;
 use Ramsey\Uuid\Uuid;
 
 final class CartRepository implements CartService
@@ -32,14 +33,12 @@ final class CartRepository implements CartService
         }
 
         $productCart = new ProductCart(Uuid::uuid4()->toString());
-        $productCart->setProduct($product);
 
         $cart->addProductCart($productCart);
         $product->addProductCart($productCart);
 
         $product->setQuantity($product->getQuantity() - 1);
 
-        $this->entityManager->persist($product);
         $this->entityManager->persist($productCart);
         $this->entityManager->flush();
     }
@@ -48,9 +47,11 @@ final class CartRepository implements CartService
     {
         $cart = $this->entityManager->find(Cart::class, $cartId);
         $product = $this->entityManager->find(Product::class, $productId);
+        $productCartRepository = $this->entityManager->getRepository(ProductCart::class);
+        $productCart = $productCartRepository->findOneBy(['Cart' => $cart, 'Product' => $product]);
 
-        if ($cart && $product && $cart->hasProduct($product)) {
-            $cart->removeProduct($product);
+        if($productCart) {
+            $cart->removeProductCart($productCart);
             $this->entityManager->persist($cart);
             $this->entityManager->flush();
         }

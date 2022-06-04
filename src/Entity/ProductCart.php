@@ -17,7 +17,7 @@ class ProductCart
     #[ORM\Column(type: 'uuid', nullable: false)]
     private UuidInterface $id;
 
-    #[ORM\ManyToOne(targetEntity: Product::class, cascade: ["persist"])]
+    #[ORM\ManyToOne(targetEntity: Product::class, cascade: ["persist"], inversedBy: 'productCarts')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $Product;
 
@@ -27,9 +27,6 @@ class ProductCart
 
     #[ORM\Column(type: 'datetime', nullable: false)]
     private \DateTime $createdAt;
-
-    #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'ProductCart')]
-    private $product;
 
     public function __construct(string $id)
     {

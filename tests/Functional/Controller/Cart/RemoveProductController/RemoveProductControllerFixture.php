@@ -9,6 +9,7 @@ use App\Entity\Product;
 use App\Entity\ProductCart;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Persistence\ObjectManager;
+use Ramsey\Uuid\Uuid;
 
 class RemoveProductControllerFixture extends AbstractFixture
 {
@@ -20,9 +21,14 @@ class RemoveProductControllerFixture extends AbstractFixture
         $product2 = new Product('7bcf6fe9-e831-4776-a9df-76a702233adc', 'Product 2', 2990,5);
         $manager->persist($product2);
 
-        $cart = new ProductCart('97e385fe-9876-45fc-baa0-4f2f0df90950');
-        $cart->setProduct($product);
-        $manager->persist($cart);
+        $cart = new Cart('97e385fe-9876-45fc-baa0-4f2f0df90950');
+
+
+        $productCart = new ProductCart(Uuid::uuid4()->toString());
+        $product->addProductCart($productCart);
+        $cart->addProductCart($productCart);
+
+        $manager->persist($productCart);
 
         $manager->flush();
     }
