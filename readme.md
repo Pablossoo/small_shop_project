@@ -1,6 +1,3 @@
-# Audioteka: zadanie rekrutacyjne
-
-## Instalacja
 
 Do uruchomienia wymagany jest `docker` i `docker-compose`
 
